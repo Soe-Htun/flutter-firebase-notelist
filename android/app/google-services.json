@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480117463709",
+    "project_id": "flutter-firebase-notelist",
+    "storage_bucket": "flutter-firebase-notelist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480117463709:android:20002124b362f097a79274",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_notelist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480117463709-fntci179sfts3c3ob1n4lspqtingdjs6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA59HuoNX5X4gz1eTS3WFOTEmRcauZrFyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480117463709-fntci179sfts3c3ob1n4lspqtingdjs6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
