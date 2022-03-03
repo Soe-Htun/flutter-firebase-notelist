@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_notelist/constants.dart';
+import 'package:flutter_firebase_notelist/services/lang_services.dart';
 import 'package:flutter_firebase_notelist/lang/message.dart';
 import 'package:flutter_firebase_notelist/screens/add_screen.dart';
 import 'package:flutter_firebase_notelist/screens/detail_screen.dart';
@@ -27,8 +28,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
 
       translations: Messages(),
-      locale: const Locale('bur', 'MY'),
-      fallbackLocale: const Locale('bur', 'MY'),
+      // translationsKeys: AppTranslation.translationKeys ,
+      // locale: const Locale('my', 'MM'),
+      // locale: Get.deviceLocale,
+      // fallbackLocale: const Locale('my', 'MM'),
+      locale: LangService.locale,
+      fallbackLocale: LangService.callBackLocale,
 
       theme: ThemeData(
         primarySwatch: Palatte.kColor,

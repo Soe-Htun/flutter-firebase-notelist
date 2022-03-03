@@ -1,12 +1,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_firebase_notelist/model/note_model.dart';
 import 'package:get/get.dart';
 
 class NoteController extends GetxController {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController amountController = TextEditingController();
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
@@ -14,7 +11,9 @@ class NoteController extends GetxController {
 
   RxList<NoteModel> noteList = RxList<NoteModel>([]);
 
-  RxList<NoteModel> noteModelList = RxList<NoteModel>([]);
+
+  // late final List<NoteModel> listData;
+  late List<Map<String, dynamic>> listData =[];
 
   @override
 
@@ -24,7 +23,7 @@ class NoteController extends GetxController {
     collectionReference = firebaseFirestore.collection("Notes");
     noteList.bindStream(getAllNotes());
     wait();
-    noteModelList = noteList;
+    // listData = noteList as List<Map<String, dynamic>>;
   }
 
   @override
