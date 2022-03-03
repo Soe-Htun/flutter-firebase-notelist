@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_notelist/controller/note_controller.dart';
 import 'package:flutter_firebase_notelist/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../constants.dart';
+import 'home_screen.dart';
 
 class DetailScreen extends StatefulWidget {
   // final String name;
@@ -30,7 +30,7 @@ class _DetailScreenState extends State<DetailScreen> {
     amountController = TextEditingController(text: Get.arguments['amount'].toString());
     return Scaffold(
       appBar: AppBar(
-        title: Text('updateNote'.tr),
+        title: Text('updateNote'.tr,),
         centerTitle: true,
       ),
       body: Padding(
@@ -51,7 +51,7 @@ class _DetailScreenState extends State<DetailScreen> {
               Expanded(child: Container()),
               Container(
                 height: 55,
-                width: double.infinity,             
+                width: MediaQuery.of(context).size.width,             
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
                   borderRadius: BorderRadius.circular(10)
@@ -68,7 +68,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       snackPosition: SnackPosition.BOTTOM,
                       animationDuration: const Duration(microseconds: 2000)
                     );
-                    Get.back();
+                    Get.off(const HomeScreen());
                   }, 
                   child: Text(
                     'updateNote'.tr,

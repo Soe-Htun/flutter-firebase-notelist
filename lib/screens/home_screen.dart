@@ -5,7 +5,6 @@ import 'package:flutter_firebase_notelist/controller/note_controller.dart';
 import 'package:flutter_firebase_notelist/model/note_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -35,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  Widget customSearch(){
+  customSearch(){
+    // Text search = Text("search".tr);
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Container(
@@ -44,11 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
           controller: searchController,
           onChanged: (value) => _searchTips(value),
           textInputAction: TextInputAction.go,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-              vertical: 12, horizontal: 10
-            ),
-            hintText: 'search...',
+          decoration:const InputDecoration(
+            hintText: 'Search..',
             hintStyle: TextStyle(color: kTextColor),
             border: InputBorder.none,
           ),
@@ -107,15 +104,15 @@ class _HomeScreenState extends State<HomeScreen> {
     searchKey = '';
     _searchTips(searchKey);
   }
-
-
-
+  
+  @override
   Widget build(BuildContext context) {
     // String locale = Intl.getCurrentLocale();
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: cusSearchBar,
-
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: (){
@@ -133,7 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: custIcon
           ),
           const SizedBox(width: 18),
-
+          // cus,
+          // Text(DateTime.parse(timestamp.toDate().toString())),
+          // Text(DateTime)
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -148,9 +147,22 @@ class _HomeScreenState extends State<HomeScreen> {
         child: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('Notes').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshotData) {
-            if(snapshotData.hasData) {
+            if(noteController.noteList.isEmpty) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Center(
+                  child: Text("nodata".tr, 
+                  style: const TextStyle(
+                    color: kBackgroundColor,
+                    fontSize: 20
+                    ),
+                  )
+                )
+              );
+            }
+            else if(snapshotData.hasData) {
               return ListView.builder(
-                itemCount: snapshotData.data!.docs.length,
+                itemCount: currentList.length,
                 itemBuilder: (context, index) {
                   // final noteID = noteController.noteList[index];
                   //final DocumentSnapshot documentSnapshot = snapshotData.data!.docs[index];
@@ -264,6 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
           color: kTextColor,
         ),
         backgroundColor: kPrimaryColor,
+        // tooltip: 'TT',
       ),
     );
   }

@@ -7,6 +7,8 @@ class Messages extends Translations {
     'en_US': {
       'note': 'Note List',
       'search' : 'Search ....',
+      'nodata': 'No Data',
+
       'name': 'Enter Name',
       'amount': 'Enter Amount',
       'addNote': 'Add Note',
@@ -25,6 +27,8 @@ class Messages extends Translations {
     'my_MM': {
       'note': 'အကြွေးစာရင်း',
       'search' : 'ရှာပါ ....',
+      'nodata': 'စာရင်း မရှိပါ',
+      
       'name': 'နာမည်‌ ရေးပါ',
       'amount': 'အကြွေးပမာဏ ရေးပါ',
       'addNote': 'အသစ် မှတ်ရန်',

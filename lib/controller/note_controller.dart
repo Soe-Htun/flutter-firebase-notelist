@@ -13,7 +13,7 @@ class NoteController extends GetxController {
 
 
   // late final List<NoteModel> listData;
-  late List<Map<String, dynamic>> listData =[];
+  // late List<Map<String, dynamic>> listData =[];
 
   @override
 
@@ -23,7 +23,6 @@ class NoteController extends GetxController {
     collectionReference = firebaseFirestore.collection("Notes");
     noteList.bindStream(getAllNotes());
     wait();
-    // listData = noteList as List<Map<String, dynamic>>;
   }
 
   @override
@@ -31,10 +30,10 @@ class NoteController extends GetxController {
     noteList.bindStream(getAllNotes());
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 
   void wait() async {
     await Future.delayed(const Duration(milliseconds: 1000));
@@ -42,10 +41,12 @@ class NoteController extends GetxController {
 
   void addNote(
     String name, double amount
+    // , DateTime dateTime
   ){
     collectionReference.add({ 
       'name': name, 
-      'amount': amount
+      'amount': amount,
+      // 'date time' : dateTime
     }).whenComplete(() {
       Get.snackbar('success'.tr,
         'addSuccess'.tr,

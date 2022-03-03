@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_notelist/constants.dart';
 import 'package:flutter_firebase_notelist/services/lang_services.dart';
-import 'package:flutter_firebase_notelist/lang/message.dart';
 import 'package:flutter_firebase_notelist/screens/add_screen.dart';
 import 'package:flutter_firebase_notelist/screens/edit_screen.dart';
 import 'package:flutter_firebase_notelist/screens/home_screen.dart';
@@ -27,11 +26,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
 
-      translations: Messages(),
+      // translations: Messages(),
       // translationsKeys: AppTranslation.translationKeys ,
       // locale: const Locale('my', 'MM'),
       // locale: Get.deviceLocale,
       // fallbackLocale: const Locale('my', 'MM'),
+
+      translations: LangService(),
       locale: LangService.locale,
       fallbackLocale: LangService.callBackLocale,
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       // home: HomeScreen(),
       initialRoute: "/",
       getPages: [
-        GetPage(name: "/", page: () => HomeScreen()),
+        GetPage(name: "/", page: () => const HomeScreen()),
         GetPage(name: "/details", page: () => const DetailScreen()),
         GetPage(name: "/add", page: () => AddScreen(), fullscreenDialog: true)
       ],

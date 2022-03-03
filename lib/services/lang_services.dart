@@ -30,8 +30,8 @@ class LangService extends Translations {
 
   @override
   Map<String, Map<String, String>> get keys => {
+    'my_MM' : my,
     'en_US' : en,
-    'my_MM' : my
   };
 
   Locale? getLocaleFromLang(String lang) {

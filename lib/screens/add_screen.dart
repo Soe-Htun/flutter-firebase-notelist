@@ -1,5 +1,6 @@
 import 'package:flutter_firebase_notelist/constants.dart';
 import 'package:flutter_firebase_notelist/controller/note_controller.dart';
+import 'package:flutter_firebase_notelist/screens/home_screen.dart';
 import 'package:flutter_firebase_notelist/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,14 +47,15 @@ class AddScreen extends StatelessWidget {
                 onPressed: (){
                   noteController.addNote(
                     name.text, 
-                    double.parse(amount.value.text.toString())
+                    double.parse(amount.value.text.toString()),
+                    // DateTime.now()
                   );
                   Get.snackbar('success'.tr,
                     'addSuccess'.tr,
                     snackPosition: SnackPosition.BOTTOM,
                     animationDuration: const Duration(microseconds: 2000)
                   );
-                  Get.back();
+                  Get.off(const HomeScreen());
                 }, 
                 child: Text(
                   'addNote'.tr,
