@@ -44,7 +44,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
               const SizedBox(height: 10),
               CustomTextFIeld(
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.number,
                 controller: amountController,
                 text: 'amount'.tr,
               ),

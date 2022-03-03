@@ -6,6 +6,7 @@ class Messages extends Translations {
   {
     'en_US': {
       'note': 'Note List',
+      'search' : 'Search ....',
       'name': 'Enter Name',
       'amount': 'Enter Amount',
       'addNote': 'Add Note',
@@ -23,6 +24,7 @@ class Messages extends Translations {
     },
     'my_MM': {
       'note': 'အကြွေးစာရင်း',
+      'search' : 'ရှာပါ ....',
       'name': 'နာမည်‌ ရေးပါ',
       'amount': 'အကြွေးပမာဏ ရေးပါ',
       'addNote': 'အသစ် မှတ်ရန်',

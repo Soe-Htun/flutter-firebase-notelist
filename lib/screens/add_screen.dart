@@ -30,7 +30,7 @@ class AddScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             CustomTextFIeld(
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: TextInputType.number,
               controller: amount,
               text: 'amount'.tr,
             ),

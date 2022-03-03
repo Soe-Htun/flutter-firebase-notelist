@@ -4,7 +4,7 @@ import 'package:flutter_firebase_notelist/constants.dart';
 import 'package:flutter_firebase_notelist/services/lang_services.dart';
 import 'package:flutter_firebase_notelist/lang/message.dart';
 import 'package:flutter_firebase_notelist/screens/add_screen.dart';
-import 'package:flutter_firebase_notelist/screens/detail_screen.dart';
+import 'package:flutter_firebase_notelist/screens/edit_screen.dart';
 import 'package:flutter_firebase_notelist/screens/home_screen.dart';
 import 'package:get/get.dart';
 

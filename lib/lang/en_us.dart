@@ -1,5 +1,7 @@
 const Map<String, String> en = {
   'note': 'Note List',
+  'search' : 'Search ....',
+
   'name': 'Enter Name',
   'amount': 'Enter Amount',
   'addNote': 'Add Note',

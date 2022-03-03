@@ -1,18 +1,14 @@
-
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase_notelist/constants.dart';
 import 'package:flutter_firebase_notelist/services/lang_services.dart';
 import 'package:flutter_firebase_notelist/controller/note_controller.dart';
 import 'package:flutter_firebase_notelist/model/note_model.dart';
-import 'package:flutter_firebase_notelist/screens/add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({ Key? key }) : super(key: key);
+  const HomeScreen({ Key? key }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,17 +17,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final NoteController noteController = Get.put(NoteController());
 
-  // final LangController langController = Get.put(LangController());
-
   TextEditingController searchController = TextEditingController();
 
   List<NoteModel> currentList = [];
   List<NoteModel> results = [];
 
-  // List<Map<String, dynamic>> currentList = [];
   String searchKey = '';
 
   String _selectedLang = LangService.langs.first;
+
+  Icon custIcon = const Icon(Icons.search);
+  Widget cusSearchBar = Text('note'.tr);
 
   @override
   initState() {
@@ -42,57 +38,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget customSearch(){
     return Padding(
       padding: const EdgeInsets.only(left: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 150,
-            height: 40,
-            child: TextField(
-              style: const TextStyle(color: Colors.black),
-              controller: searchController,
-              onChanged: (value) => _searchTips(value),
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                // suffixIcon: searchKey.isNotEmpty
-                // ? CustomIconButton(
-                //   onPress: _clearSearchKey,
-                //   icon: Icons.clear)
-                //   : null,
-                suffixIcon: searchKey.isNotEmpty
-                ? IconButton(
-                  onPressed: (){
-                    clearSearchKey();
-                  },
-                  icon:const Icon(Icons.clear)
-                ) : null,
-
-                filled: true,
-                
-                fillColor: const Color(0xfff5f6fa),
-                hintText: 'Search...',
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 12
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 0
-                  )
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Colors.transparent,
-                    width: 0
-                  )
-                )
-              ),
-              
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: TextField(
+          controller: searchController,
+          onChanged: (value) => _searchTips(value),
+          textInputAction: TextInputAction.go,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 12, horizontal: 10
             ),
+            hintText: 'search...',
+            hintStyle: TextStyle(color: kTextColor),
+            border: InputBorder.none,
           ),
-        ],
+          
+        ),
       ),
     );
   }
@@ -107,6 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text(lang,
             // style: TextStyle(color: kBackgroundColor),
           ),
+          // child: lang == _selectedLang? 
+          // Text(lang,
+          //   style: const TextStyle(color: kBackgroundColor),
+          // ) : Text(lang),
           value: lang,
         );
       }).toList(),
@@ -146,18 +111,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   Widget build(BuildContext context) {
-    String locale = Intl.getCurrentLocale();
+    // String locale = Intl.getCurrentLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'note'.tr,
-        ),
-        centerTitle: true,
-        leadingWidth: 180,
-        leading: customSearch(),
+        title: cusSearchBar,
+
         actions: [
-          // customSearch()
-          languageChooser()
+          IconButton(
+            onPressed: (){
+              setState(() {
+                if(custIcon.icon == Icons.search) {
+                  custIcon = const Icon(Icons.cancel);
+                  cusSearchBar = customSearch();
+                } else {
+                  custIcon = const Icon(Icons.search);
+                  cusSearchBar = Text('note'.tr);
+                  clearSearchKey();
+                }
+              });
+            },
+            icon: custIcon
+          ),
+          const SizedBox(width: 18),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              languageChooser(),
+            ],
+          ),
         ],
       ),
 
@@ -207,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         TextSpan(
                                           text: " ${currentList[index].name} ?",
-                                          style: const TextStyle(color: kBackgroundColor)
+                                          style: const TextStyle(color: kBackgroundColor, fontWeight: FontWeight.bold)
                                         )
                                       ]
                                     )

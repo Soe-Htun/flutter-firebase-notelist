@@ -1,5 +1,6 @@
 const Map<String, String> my = {
   'note': 'အကြွေးစာရင်း',
+  'search' : 'ရှာပါ ....',
   'name': 'နာမည်‌ ရေးပါ',
   'amount': 'အကြွေးပမာဏ ရေးပါ',
   'addNote': 'အသစ် မှတ်ရန်',
