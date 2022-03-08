@@ -41,12 +41,13 @@ class NoteController extends GetxController {
 
   void addNote(
     String name, double amount
-    // , DateTime dateTime
+    , DateTime dateTime
   ){
     collectionReference.add({ 
       'name': name, 
       'amount': amount,
-      // 'date time' : dateTime
+      // 'createdDate': createdDate
+      'datetime' : dateTime
     }).whenComplete(() {
       Get.snackbar('success'.tr,
         'addSuccess'.tr,
@@ -57,11 +58,12 @@ class NoteController extends GetxController {
   }
 
   void updateNote(
-    String name, double amount, String docId
+    String name, double amount, String docId, DateTime dateTime
   ) {
     collectionReference.doc(docId).update({
       'name': name,
       'amount': amount,
+      'datetime': dateTime
     });
   }
 

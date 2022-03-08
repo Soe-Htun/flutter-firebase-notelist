@@ -5,6 +5,7 @@ import 'package:flutter_firebase_notelist/controller/note_controller.dart';
 import 'package:flutter_firebase_notelist/model/note_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({ Key? key }) : super(key: key);
@@ -31,6 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     currentList = noteController.noteList;
+    // final DateTime now = DateTime.now();
+    // final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    // final String formatted = formatter.format(now);
+    // print("Formatted----- $formatted");
     super.initState();
   }
 
@@ -166,91 +171,117 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   // final noteID = noteController.noteList[index];
                   //final DocumentSnapshot documentSnapshot = snapshotData.data!.docs[index];
-                  
-                  return GestureDetector(
-                    child: Card(
-                      color: kPrimaryColor,
-                      child: ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: Text(currentList[index].name.toString()),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: Text(currentList[index].amount.toString()),
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          onPressed: (){
-                            Get.defaultDialog(
-                              title: "delete".tr,
-                              titleStyle: const TextStyle(fontSize: 20, color: kBackgroundColor),
-                              content: Column(
-                                children: [
-                                  // RichText(text: text)
-                                  // Text('Hi', style: const TextStyle(color: kBackgroundColor),),
-                                  Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'sure'.tr,
-                                          style: const TextStyle(color: kBackgroundColor) 
-                                        ),
-                                        TextSpan(
-                                          text: " ${currentList[index].name} ?",
-                                          style: const TextStyle(color: kBackgroundColor, fontWeight: FontWeight.bold)
-                                        )
-                                      ]
-                                    )
-                                  ),
-                                  const SizedBox(height: 20,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      GestureDetector(
-                                        child: Text("cancel".tr,
-                                          style: const TextStyle(color: kBackgroundColor)
-                                        ),
-                                        onTap: () {
-                                          Get.back();
-                                        }
-                                      ),
-                                      GestureDetector(
-                                        child: Text("confirm".tr, 
-                                          style: const TextStyle(color: Colors.red)
-                                        ),
-                                        onTap: () {
-                                          noteController.deleteData(currentList[index].docId!);
-                                          Get.back();
-                                          Get.snackbar(
-                                            'success'.tr,
-                                            'deleteSuccess'.tr,
-                                            snackPosition: SnackPosition.BOTTOM,
-                                            animationDuration: const Duration(microseconds: 2000)
-                                          );
-                                        },
-                                      )
-                                    ],
-                                  )
-                                ],
-                              )
-                            );
-                          },
-                        ),
+                  return Dismissible(
+                    key: UniqueKey(),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) {
+                      setState(() {
+                        // currentList[index].r
+                        currentList.removeAt(index);
+                        noteController.deleteData(currentList[index].docId!);
+                        Get.snackbar(
+                          'success'.tr,
+                          'deleteSuccess'.tr,
+                          snackPosition: SnackPosition.BOTTOM,
+                          animationDuration: const Duration(microseconds: 2000)
+                        );
+                      });
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      child: const Icon(Icons.delete,
+                        color: Colors.white,
                       ),
                     ),
-                    onTap: () {
-                      Get.toNamed( "/details",
-                        arguments: {
-                          "id": currentList[index].docId,
-                          "name" : currentList[index].name.toString(),
-                          "amount" : currentList[index].amount
-                        }
-                      );
-                    },
+
+                    child: GestureDetector(
+                      child: Card(
+                        color: kPrimaryColor,
+                        child: ListTile(
+                          title: Padding(
+                            padding: const EdgeInsets.only(bottom: 5),
+                            child: Text(currentList[index].name.toString()),
+                          ),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(bottom: 5),
+                            child: Text(currentList[index].amount.toString()),
+                          ),
+                          // trailing: IconButton(
+                          //   icon: const Icon(
+                          //     Icons.delete,
+                          //     color: Colors.red,
+                          //   ),
+                          //   onPressed: (){
+                          //     Get.defaultDialog(
+                          //       title: "delete".tr,
+                          //       titleStyle: const TextStyle(fontSize: 20, color: kBackgroundColor),
+                          //       content: Column(
+                          //         children: [
+                          //           // RichText(text: text)
+                          //           // Text('Hi', style: const TextStyle(color: kBackgroundColor),),
+                          //           Text.rich(
+                          //             TextSpan(
+                          //               children: [
+                          //                 TextSpan(
+                          //                   text: 'sure'.tr,
+                          //                   style: const TextStyle(color: kBackgroundColor) 
+                          //                 ),
+                          //                 TextSpan(
+                          //                   text: " ${currentList[index].name} ?",
+                          //                   style: const TextStyle(color: kBackgroundColor, fontWeight: FontWeight.bold)
+                          //                 )
+                          //               ]
+                          //             )
+                          //           ),
+                          //           const SizedBox(height: 20,),
+                          //           Row(
+                          //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //             children: [
+                          //               GestureDetector(
+                          //                 child: Text("cancel".tr,
+                          //                   style: const TextStyle(color: kBackgroundColor)
+                          //                 ),
+                          //                 onTap: () {
+                          //                   Get.back();
+                          //                 }
+                          //               ),
+                          //               GestureDetector(
+                          //                 child: Text("confirm".tr, 
+                          //                   style: const TextStyle(color: Colors.red)
+                          //                 ),
+                          //                 onTap: () {
+                          //                   noteController.deleteData(currentList[index].docId!);
+                          //                   Get.back();
+                          //                   Get.snackbar(
+                          //                     'success'.tr,
+                          //                     'deleteSuccess'.tr,
+                          //                     snackPosition: SnackPosition.BOTTOM,
+                          //                     animationDuration: const Duration(microseconds: 2000)
+                          //                   );
+                          //                 },
+                          //               )
+                          //             ],
+                          //           )
+                          //         ],
+                          //       )
+                          //     );
+                          //   },
+                          // ),
+                  
+                          trailing: Text("${currentList[index].datetime?.toLocal()}".split(' ')[0]),
+                        ),
+                      ),
+                      onTap: () {
+                        Get.toNamed( "/details",
+                          arguments: {
+                            "id": currentList[index].docId,
+                            "name" : currentList[index].name.toString(),
+                            "amount" : currentList[index].amount
+                          }
+                        );
+                      },
+                    ),
                   ); 
                 }
               );

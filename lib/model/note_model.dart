@@ -5,19 +5,20 @@ class NoteModel {
   String? docId;
   String? name;
   double? amount;
-  // late Timestamp createdDate;
+  DateTime? datetime;
 
   NoteModel({
     this.docId,
     this.name,
     this.amount,
-    // required this.createdDate
+    this.datetime
   });
 
   NoteModel.fromMap(DocumentSnapshot data) {
     docId = data.id;
     name = data["name"];
     amount = data["amount"];
+   // datetime = data["datetime"];
     // createdDate = data["createdDate"];
   }
 }

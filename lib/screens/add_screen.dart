@@ -4,15 +4,44 @@ import 'package:flutter_firebase_notelist/screens/home_screen.dart';
 import 'package:flutter_firebase_notelist/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class AddScreen extends StatelessWidget {
+class AddScreen extends StatefulWidget {
   AddScreen({ Key? key }) : super(key: key);
+
+  @override
+  State<AddScreen> createState() => _AddScreenState();
+}
+
+class _AddScreenState extends State<AddScreen> {
   TextEditingController name = TextEditingController();
+
   TextEditingController amount = TextEditingController();
+  TextEditingController date = TextEditingController();
+
   NoteController noteController = Get.put(NoteController());
+
+  DateTime selectedDate= DateTime.now();
+
+  _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context, 
+      initialDate: selectedDate, 
+      firstDate: DateTime(2015), 
+      lastDate: DateTime.now()
+    ).then((pickedDate) {
+      if(pickedDate == null) {
+        return;
+      }
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    
+    date = TextEditingController(text: DateFormat('yyyy-MM-dd').format(selectedDate));
     return Scaffold(
       appBar: AppBar(
         title: Text('addNote'.tr),
@@ -35,6 +64,26 @@ class AddScreen extends StatelessWidget {
               controller: amount,
               text: 'amount'.tr,
             ),
+            // TextButton(
+            //   child: Text("${selectedDate.toLocal()}".split(' ')[0], 
+            //     style: const TextStyle(color: kBackgroundColor),
+            //   ),
+            //   onPressed: () {
+            //     _selectDate(context);
+            //   },
+            // ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: date,
+              style: const TextStyle(
+                fontSize: 20,
+                color: kBackgroundColor
+              ),
+              onTap: () {
+                _selectDate(context);
+              },
+            ),
+
             Expanded(child: Container()),
             Container(
               height: 55,
@@ -48,6 +97,8 @@ class AddScreen extends StatelessWidget {
                   noteController.addNote(
                     name.text, 
                     double.parse(amount.value.text.toString()),
+                    selectedDate
+                    // formatted
                     // DateTime.now()
                   );
                   Get.snackbar('success'.tr,

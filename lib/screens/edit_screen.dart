@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_notelist/controller/note_controller.dart';
 import 'package:flutter_firebase_notelist/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../constants.dart';
 import 'home_screen.dart';
@@ -20,14 +21,32 @@ class DetailScreen extends StatefulWidget {
   final NoteController noteController = Get.put(NoteController());
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-
+  TextEditingController date = TextEditingController();
+  
+  DateTime selectedDate= DateTime.now();
 
 class _DetailScreenState extends State<DetailScreen> {
-  
+
+   _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context, 
+      initialDate: selectedDate, 
+      firstDate: DateTime(2015), 
+      lastDate: DateTime.now()
+    ).then((pickedDate) {
+      if(pickedDate == null) {
+        return;
+      }
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     nameController = TextEditingController(text: Get.arguments['name']);
     amountController = TextEditingController(text: Get.arguments['amount'].toString());
+    date = TextEditingController(text: DateFormat('yyyy-MM-dd').format(selectedDate));
     return Scaffold(
       appBar: AppBar(
         title: Text('updateNote'.tr,),
@@ -48,6 +67,17 @@ class _DetailScreenState extends State<DetailScreen> {
                 controller: amountController,
                 text: 'amount'.tr,
               ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: date,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: kBackgroundColor
+                ),
+                onTap: () {
+                  _selectDate(context);
+                },
+              ),
               Expanded(child: Container()),
               Container(
                 height: 55,
@@ -61,7 +91,8 @@ class _DetailScreenState extends State<DetailScreen> {
                     noteController.updateNote(
                       nameController.text, 
                       double.parse(amountController.text.toString()), 
-                      Get.arguments['id']
+                      Get.arguments['id'],
+                      selectedDate
                     );
                     Get.snackbar('success'.tr,
                       'updateSuccess'.tr,
