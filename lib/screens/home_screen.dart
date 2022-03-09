@@ -49,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
           controller: searchController,
           onChanged: (value) => _searchTips(value),
           textInputAction: TextInputAction.go,
-          decoration:const InputDecoration(
-            hintText: 'Search..',
-            hintStyle: TextStyle(color: kTextColor),
+          decoration: InputDecoration(
+            hintText: 'search'.tr,
+            hintStyle: const TextStyle(color: kTextColor),
             border: InputBorder.none,
           ),
           
@@ -67,8 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
       value: _selectedLang,
       items: LangService.langs.map((String lang) {
         return DropdownMenuItem<String>(
-          child: Text(lang,
-            // style: TextStyle(color: kBackgroundColor),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(lang,
+              // style: TextStyle(color: kBackgroundColor),
+            ),
           ),
           // child: lang == _selectedLang? 
           // Text(lang,
@@ -118,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: cusSearchBar,
         automaticallyImplyLeading: false,
+        // leading: Text(Get.locale.toString() == "my_MM" ? "HI" : "Elde"),
         actions: [
           IconButton(
             onPressed: (){
@@ -177,7 +181,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   // final noteID = noteController.noteList[index];
                   //final DocumentSnapshot documentSnapshot = snapshotData.data!.docs[index];
-                  final Data = currentList[index].datetime;
                   return Dismissible(
                     key: UniqueKey(),
                     direction: DismissDirection.endToStart,
@@ -185,13 +188,88 @@ class _HomeScreenState extends State<HomeScreen> {
                       setState(() {
                         // currentList[index].r
                         // currentList.removeAt(index);
-                        noteController.deleteData(currentList[index].docId!);
-                        Get.snackbar(
-                          'success'.tr,
-                          'deleteSuccess'.tr,
-                          snackPosition: SnackPosition.BOTTOM,
-                          animationDuration: const Duration(microseconds: 2000)
+                        Get.defaultDialog(
+                          title: "delete".tr,
+                          titleStyle: const TextStyle(fontSize: 20, color: kBackgroundColor),
+                          content: Column(
+                            children: [
+                              // RichText(text: text)
+                              // Text('Hi', style: const TextStyle(color: kBackgroundColor),),
+                              Get.locale.toString() == "my_MM" ?
+                              Text.rich(
+                                TextSpan(
+                                  children: [
+                                    
+                                    TextSpan(
+                                      text: " ${currentList[index].name} ",
+                                      style: const TextStyle(color: kBackgroundColor, fontWeight: FontWeight.bold)
+                                    ),
+                                    TextSpan(
+                                      text: 'to'.tr,
+                                      style: const TextStyle(color: kBackgroundColor) 
+                                    ),
+                                    TextSpan(
+                                      text: 'sure'.tr,
+                                      style: const TextStyle(color: kBackgroundColor) 
+                                    )
+                                  ]
+                                )
+                              ) 
+                              :
+                              Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'sure'.tr,
+                                      style: const TextStyle(color: kBackgroundColor) 
+                                    ),
+                                    TextSpan(
+                                      text: " ${currentList[index].name} ?",
+                                      style: const TextStyle(color: kBackgroundColor, fontWeight: FontWeight.bold)
+                                    )
+                                  ]
+                                )
+                              ),
+                              const SizedBox(height: 20,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  GestureDetector(
+                                    child: Text("cancel".tr,
+                                      style: const TextStyle(color: kBackgroundColor)
+                                    ),
+                                    onTap: () {
+                                      Get.back();
+                                    }
+                                  ),
+                                  GestureDetector(
+                                    child: Text("confirm".tr, 
+                                      style: const TextStyle(color: Colors.red)
+                                    ),
+                                    onTap: () {
+                                      noteController.deleteData(currentList[index].docId!);
+                                      Get.back();
+                                      Get.snackbar(
+                                        'success'.tr,
+                                        'deleteSuccess'.tr,
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        animationDuration: const Duration(microseconds: 2000)
+                                      );
+                                    },
+                                  )
+                                ],
+                              )
+                            ],
+                          )
                         );
+
+                        // noteController.deleteData(currentList[index].docId!);
+                        // Get.snackbar(
+                        //   'success'.tr,
+                        //   'deleteSuccess'.tr,
+                        //   snackPosition: SnackPosition.BOTTOM,
+                        //   animationDuration: const Duration(microseconds: 2000)
+                        // );
                       });
                     },
                     background: Container(
@@ -213,75 +291,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           subtitle: Padding(
                             padding: const EdgeInsets.only(bottom: 5),
                             child: Text(currentList[index].amount.toString()),
-                          ),
-                          // trailing: IconButton(
-                          //   icon: const Icon(
-                          //     Icons.delete,
-                          //     color: Colors.red,
-                          //   ),
-                          //   onPressed: (){
-                          //     Get.defaultDialog(
-                          //       title: "delete".tr,
-                          //       titleStyle: const TextStyle(fontSize: 20, color: kBackgroundColor),
-                          //       content: Column(
-                          //         children: [
-                          //           // RichText(text: text)
-                          //           // Text('Hi', style: const TextStyle(color: kBackgroundColor),),
-                          //           Text.rich(
-                          //             TextSpan(
-                          //               children: [
-                          //                 TextSpan(
-                          //                   text: 'sure'.tr,
-                          //                   style: const TextStyle(color: kBackgroundColor) 
-                          //                 ),
-                          //                 TextSpan(
-                          //                   text: " ${currentList[index].name} ?",
-                          //                   style: const TextStyle(color: kBackgroundColor, fontWeight: FontWeight.bold)
-                          //                 )
-                          //               ]
-                          //             )
-                          //           ),
-                          //           const SizedBox(height: 20,),
-                          //           Row(
-                          //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          //             children: [
-                          //               GestureDetector(
-                          //                 child: Text("cancel".tr,
-                          //                   style: const TextStyle(color: kBackgroundColor)
-                          //                 ),
-                          //                 onTap: () {
-                          //                   Get.back();
-                          //                 }
-                          //               ),
-                          //               GestureDetector(
-                          //                 child: Text("confirm".tr, 
-                          //                   style: const TextStyle(color: Colors.red)
-                          //                 ),
-                          //                 onTap: () {
-                          //                   noteController.deleteData(currentList[index].docId!);
-                          //                   Get.back();
-                          //                   Get.snackbar(
-                          //                     'success'.tr,
-                          //                     'deleteSuccess'.tr,
-                          //                     snackPosition: SnackPosition.BOTTOM,
-                          //                     animationDuration: const Duration(microseconds: 2000)
-                          //                   );
-                          //                 },
-                          //               )
-                          //             ],
-                          //           )
-                          //         ],
-                          //       )
-                          //     );
-                          //   },
-                          // ),
-                  
-                          // trailing: Text(DateFormat('yyyy-MM-dd').format(currentList[index].datetime!.toLocal()).split(' ')[0]),
+                          ),                
                           trailing: Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(currentList[index].datetime!.toDate().toString()))),
                         ),
                       ),
                       onTap: () {
-                        Get.toNamed( "/details",
+                        Get.toNamed( "/edit",
                           arguments: {
                             "id": currentList[index].docId,
                             "name" : currentList[index].name.toString(),

@@ -41,7 +41,7 @@ class NoteController extends GetxController {
 
   void addNote(
     String name, double amount
-    , Timestamp dateTime
+    , DateTime dateTime
   ){
     collectionReference.add({ 
       'name': name, 

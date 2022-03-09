@@ -14,6 +14,7 @@ const Map<String, String> my = {
   'deleteSuccess': 'ဖျက် ပြီးပါပြီ',
 
   'delete': 'ဖျက်မည်',
+  'to': 'ကိူ ',
   'sure': 'ဖျက်မာ သေချာလား',
   'cancel': 'မဖျက်ဘူး',
   'confirm': 'ဖျက်မည်'

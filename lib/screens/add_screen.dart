@@ -98,7 +98,7 @@ class _AddScreenState extends State<AddScreen> {
                   noteController.addNote(
                     name.text, 
                     double.parse(amount.value.text.toString()),
-                    (selectedDate as Timestamp)
+                    selectedDate
                     // formatted
                     // DateTime.now()
                   );

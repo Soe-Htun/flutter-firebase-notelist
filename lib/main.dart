@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       getPages: [
         GetPage(name: "/", page: () => const HomeScreen()),
-        GetPage(name: "/details", page: () => const DetailScreen()),
+        GetPage(name: "/edit", page: () => const DetailScreen()),
         GetPage(name: "/add", page: () => AddScreen(), fullscreenDialog: true)
       ],
     );

@@ -14,6 +14,7 @@ const Map<String, String> en = {
   'deleteSuccess': 'Successfully deleted',
 
   'delete': 'Note Delete',
+  'to': 'to',
   'sure': 'Are you sure to delete',
   'cancel': 'Cancel',
   'confirm': 'Confirm'
