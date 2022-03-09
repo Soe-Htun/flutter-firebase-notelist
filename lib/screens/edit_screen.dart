@@ -46,7 +46,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     nameController = TextEditingController(text: Get.arguments['name']);
     amountController = TextEditingController(text: Get.arguments['amount'].toString());
-    date = TextEditingController(text: DateFormat('yyyy-MM-dd').format(selectedDate));
+    date = TextEditingController(text: DateFormat('dd/MM/yyyy').format(selectedDate));
     return Scaffold(
       appBar: AppBar(
         title: Text('updateNote'.tr,),

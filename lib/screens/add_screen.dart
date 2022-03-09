@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase_notelist/constants.dart';
 import 'package:flutter_firebase_notelist/controller/note_controller.dart';
 import 'package:flutter_firebase_notelist/screens/home_screen.dart';
@@ -41,7 +42,7 @@ class _AddScreenState extends State<AddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    date = TextEditingController(text: DateFormat('yyyy-MM-dd').format(selectedDate));
+    date = TextEditingController(text: DateFormat('dd/MM/yyyy').format(selectedDate));
     return Scaffold(
       appBar: AppBar(
         title: Text('addNote'.tr),
@@ -97,7 +98,7 @@ class _AddScreenState extends State<AddScreen> {
                   noteController.addNote(
                     name.text, 
                     double.parse(amount.value.text.toString()),
-                    selectedDate
+                    (selectedDate as Timestamp)
                     // formatted
                     // DateTime.now()
                   );

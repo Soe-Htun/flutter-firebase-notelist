@@ -152,7 +152,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('Notes').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshotData) {
-            if(noteController.noteList.isEmpty) {
+            if(snapshotData.connectionState == ConnectionState.waiting) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: const Center(
+                  child: CircularProgressIndicator()
+                )
+              );
+            } else if(snapshotData.data == null) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Center(
@@ -164,20 +171,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 )
               );
-            }
-            else if(snapshotData.hasData) {
+            } else {
               return ListView.builder(
                 itemCount: currentList.length,
                 itemBuilder: (context, index) {
                   // final noteID = noteController.noteList[index];
                   //final DocumentSnapshot documentSnapshot = snapshotData.data!.docs[index];
+                  final Data = currentList[index].datetime;
                   return Dismissible(
                     key: UniqueKey(),
                     direction: DismissDirection.endToStart,
                     onDismissed: (direction) {
                       setState(() {
                         // currentList[index].r
-                        currentList.removeAt(index);
+                        // currentList.removeAt(index);
                         noteController.deleteData(currentList[index].docId!);
                         Get.snackbar(
                           'success'.tr,
@@ -269,7 +276,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           //   },
                           // ),
                   
-                          trailing: Text("${currentList[index].datetime?.toLocal()}".split(' ')[0]),
+                          // trailing: Text(DateFormat('yyyy-MM-dd').format(currentList[index].datetime!.toLocal()).split(' ')[0]),
+                          trailing: Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(currentList[index].datetime!.toDate().toString()))),
                         ),
                       ),
                       onTap: () {
@@ -287,12 +295,14 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             } 
 
-            return SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: const Center(
-                child: CircularProgressIndicator()
-              )
-            );
+            // else if(snapshotData.connectionState == ConnectionState.waiting) {
+            //   return SizedBox(
+            //     height: MediaQuery.of(context).size.height,
+            //     child: const Center(
+            //       child: CircularProgressIndicator()
+            //     )
+            //   );
+            // }
           },
         ),
       ),

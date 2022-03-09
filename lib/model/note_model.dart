@@ -5,7 +5,7 @@ class NoteModel {
   String? docId;
   String? name;
   double? amount;
-  DateTime? datetime;
+  Timestamp? datetime;
 
   NoteModel({
     this.docId,
@@ -18,7 +18,7 @@ class NoteModel {
     docId = data.id;
     name = data["name"];
     amount = data["amount"];
-   // datetime = data["datetime"];
+    datetime = data["datetime"];
     // createdDate = data["createdDate"];
   }
 }
