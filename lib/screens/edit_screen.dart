@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_notelist/controller/note_controller.dart';
 import 'package:flutter_firebase_notelist/widgets/custom_text_field.dart';
@@ -23,7 +24,7 @@ class DetailScreen extends StatefulWidget {
   TextEditingController amountController = TextEditingController();
   TextEditingController date = TextEditingController();
   
-  DateTime selectedDate= DateTime.now();
+  DateTime selectedDate= (Get.arguments['date'] as Timestamp).toDate();
 
 class _DetailScreenState extends State<DetailScreen> {
 
@@ -31,7 +32,7 @@ class _DetailScreenState extends State<DetailScreen> {
     final DateTime? picked = await showDatePicker(
       context: context, 
       initialDate: selectedDate, 
-      firstDate: DateTime(2015), 
+      firstDate: DateTime(1900), 
       lastDate: DateTime.now()
     ).then((pickedDate) {
       if(pickedDate == null) {
@@ -46,7 +47,9 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     nameController = TextEditingController(text: Get.arguments['name']);
     amountController = TextEditingController(text: Get.arguments['amount'].toString());
-    date = TextEditingController(text: DateFormat('dd/MM/yyyy').format(selectedDate));
+    // date = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.parse(Get.arguments['date'])));
+    date = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.parse(selectedDate.toString())));
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('updateNote'.tr,),

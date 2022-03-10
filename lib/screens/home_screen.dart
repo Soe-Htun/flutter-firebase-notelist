@@ -300,7 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           arguments: {
                             "id": currentList[index].docId,
                             "name" : currentList[index].name.toString(),
-                            "amount" : currentList[index].amount
+                            "amount" : currentList[index].amount,
+                            "date" : currentList[index].datetime
                           }
                         );
                       },
